@@ -1,3 +1,4 @@
+```
 App (top-level component)
 ├── Header: includes the logo and navigation links
 ├── SearchBar: allows users to search for specific topics, keywords, or authors
@@ -8,3 +9,4 @@ App (top-level component)
 │       ├── BookmarkButton: allows users to bookmark/save a news story
 │       └── ShareButtons: allows users to share a news story on social media or via email
 └── FilterPanel: allows users to further customize their news feed by specifying which topics, sources, or types of content they want to see or exclude
+```
