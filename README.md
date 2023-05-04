@@ -1,5 +1,3 @@
-Sure, here's an updated `README.md` file for the News App with additional features:
-
 # News App
 
 A React-based web application that allows you to view, search, filter, bookmark, save, comment on, and share news articles from various sources.
