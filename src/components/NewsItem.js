@@ -1,13 +1,9 @@
 import React from "react";
 
-function NewsItem({ article }) {
-  console.log(article);
-  console.log(article);
-  // Renders each news article with the given article data
-
+function NewsItem({ article, bookmarkArticle }) {
   // Handles when the user clicks the Bookmark button
   const handleBookmarkClick = () => {
-    // Code for bookmarking the article goes here
+    bookmarkArticle(article);
   };
 
   // Handles when the user clicks the Comments button

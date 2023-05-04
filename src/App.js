@@ -6,6 +6,7 @@ function App() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -26,6 +27,16 @@ function App() {
     })();
   }, []);
 
+  // Function to handle bookmarking an article
+  const handleBookmark = (article) => {
+    if (!bookmarkedArticles.includes(article)) {
+      const newBookmarks = [...bookmarkedArticles, article];
+      setBookmarkedArticles(newBookmarks);
+      localStorage.setItem("bookmarkedArticles", JSON.stringify(newBookmarks));
+    }
+    console.log("Success");
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -37,7 +48,7 @@ function App() {
   return (
     <div>
       {/* Pass the news data as props to the NewsList component */}
-      <NewsList articles={articles} />
+      <NewsList articles={articles} bookmarkArticle={handleBookmark} />
     </div>
   );
 }
