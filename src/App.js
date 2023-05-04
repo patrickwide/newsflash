@@ -12,12 +12,13 @@ const NewsApp = () => {
       .then(data => setArticles(data.articles))
       .catch(error => console.error(error));
 
-    // Load bookmarked and saved articles from Local Storage
+    // Load bookmarked articles from Local Storage
     const storedBookmarks = localStorage.getItem('bookmarkedArticles');
     if (storedBookmarks) {
       setBookmarkedArticles(JSON.parse(storedBookmarks));
     }
 
+    // Load saved articles from Local Storage
     const storedSavedArticles = localStorage.getItem('savedArticles');
     if (storedSavedArticles) {
       setSavedArticles(JSON.parse(storedSavedArticles));
