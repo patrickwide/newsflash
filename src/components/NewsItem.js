@@ -1,6 +1,8 @@
 import React from "react";
 
 function NewsItem({ article }) {
+  console.log(article);
+  console.log(article);
   // Renders each news article with the given article data
 
   // Handles when the user clicks the Bookmark button
@@ -18,6 +20,24 @@ function NewsItem({ article }) {
     // Code for sharing the article on the given platform goes here
   };
 
+  let authorString;
+  if (
+    article.author &&
+    /<a\s+[^>]*href="[^"]*"[^>]*>(.*?)<\/a>/gi.test(article.author)
+  ) {
+    const authorRegex = /<a\s+[^>]*href="[^"]*"[^>]*>(.*?)<\/a>/gi;
+    const authorNames = [];
+
+    let match;
+    while ((match = authorRegex.exec(article.author))) {
+      authorNames.push(match[1]);
+    }
+
+    authorString = authorNames.join(", ");
+  } else {
+    authorString = article.author || "Unknown Author";
+  }
+
   return (
     <div className="bg-gray-100 border p-4 mb-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
       {/* Displays the article title */}
@@ -25,18 +45,31 @@ function NewsItem({ article }) {
 
       {/* Displays the article image */}
       <img
-        src={article.urlToImage}
+        src={
+          article.urlToImage ||
+          "https://via.placeholder.com/800x400.png?text=Image+Not+Available"
+        }
         alt={article.title}
         className="mb-4 transform hover:scale-105 transition duration-300 ease-in-out rounded-md"
+        onError={(e) => {
+          e.target.src =
+            "https://via.placeholder.com/800x400.png?text=Image+Not+Available";
+        }}
       />
 
       {/* Displays the article description */}
-      <p className="mb-4 text-xl">{article.description}</p>
-
-      {/* Displays the article author and publish date */}
-      <p className=" mb-4 text-gray-600 text-sm">
-        By {article.author} on {article.publishedAt}
+      <p className="mb-4 text-xl">
+        {article.description || "Description Missing"}
       </p>
+
+      {/* Displays the article source, author and publish date */}
+      <p className="mb-4 text-gray-600 text-sm">
+        Source: {article.source.name || "Unknown Source"} - By: {authorString} -
+        on: {article.publishedAt}
+      </p>
+
+      {/* Displays the article content */}
+      <p className="mb-4 text-xl">{article.content || "Content Missing"}</p>
 
       {/* Button for bookmarking the article */}
       <button
