@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NewsList from "./components/NewsList";
 import NEWS_API_KEY from "./data/config";
-import Search from "./components/Search";
+import Header from "./components/Header";
+import Layout from "./components/Layout";
+import SidebarRight from "./components/SidebarRight";
+import SidebarLeft from "./components/SidebarLeft";
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -35,7 +38,7 @@ function App() {
         setIsLoading(true);
         try {
           const response = await fetch(
-            `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${NEWS_API_KEY}`
+            `https://newsapi.org/v2/everything?q=${searchQuery}&pageSize=15&apiKey=${NEWS_API_KEY}`
           );
           const data = await response.json();
           setArticles(data.articles);
@@ -61,20 +64,50 @@ function App() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{ width: "50px", height: "50px" }}
+            className="animate-spin"
+          >
+            <div className="h-full w-full border-4 border-t-purple-500 border-b-purple-700 rounded-[50%]"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
+  function handleOnSearchSubmit(query) {
+    console.log(query);
+    setSearchQuery(query);
+  }
+
   return (
-    <div>
-      {/* Render the Search component and pass the query and setSearchQuery function as props */}
-      <Search onSubmit={(query) => setSearchQuery(query)} />
-      {/* Pass the news data as props to the NewsList component */}
-      <NewsList articles={articles} bookmarkArticle={handleBookmark} />
-    </div>
+    <Layout
+      header={<Header onSearchSubmit={handleOnSearchSubmit} />}
+      main={<NewsList articles={articles} bookmarkArticle={handleBookmark} />}
+      sidebarLeft={<SidebarLeft />}
+      sidebarRight={<SidebarRight />}
+    />
   );
 }
 
