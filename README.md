@@ -14,7 +14,7 @@ A React-based web application that allows you to view, search, filter, bookmark,
 
 ## Setup
 
-1. Clone the repository: `git clone https://github.com/your-username/news-app.git`
+1. Clone the repository: `git clone https://github.com/patrickwide/newsflash.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm start`
 
