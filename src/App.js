@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const NewsApp = () => {
   const [articles, setArticles] = useState([]);
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
-  const [savedArticles, setSavedArticles] = useState([]);
 
   useEffect(() => {
     // Fetch articles from API
@@ -17,12 +16,6 @@ const NewsApp = () => {
     if (storedBookmarks) {
       setBookmarkedArticles(JSON.parse(storedBookmarks));
     }
-
-    // Load saved articles from Local Storage
-    const storedSavedArticles = localStorage.getItem('savedArticles');
-    if (storedSavedArticles) {
-      setSavedArticles(JSON.parse(storedSavedArticles));
-    }
   }, []);
 
   // Function to handle bookmarking an article
@@ -34,25 +27,25 @@ const NewsApp = () => {
     }
   };
 
-  // Function to handle saving an article
-  const handleSave = (article) => {
-    if (!savedArticles.includes(article)) {
-      const newSaved = [...savedArticles, article];
-      setSavedArticles(newSaved);
-      localStorage.setItem('savedArticles', JSON.stringify(newSaved));
-    }
-  };
-
   return (
     <div>
       <h1>News App</h1>
       <div>
+        <h2>Bookmarked Articles:</h2>
+        {bookmarkedArticles.map((article, index) => (
+          <div key={index}>
+            <h3>{article.title}</h3>
+            <p>{article.description}</p>
+          </div>
+        ))}
+      </div>
+      <div>
+        <h2>Top Headlines:</h2>
         {articles.map((article, index) => (
           <div key={index}>
-            <h2>{article.title}</h2>
+            <h3>{article.title}</h3>
             <p>{article.description}</p>
             <button onClick={() => handleBookmark(article)}>Bookmark</button>
-            <button onClick={() => handleSave(article)}>Save</button>
           </div>
         ))}
       </div>
