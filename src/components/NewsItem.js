@@ -16,20 +16,21 @@ function NewsItem({ article, bookmarkArticle }) {
 
   // Handles when the user clicks one of the Share buttons
   const handleShareClick = (platform) => {
+    const tweetText = `Check out this article:\n${article.title}\n${article.url}`;
+
     switch (platform) {
       case "Facebook":
         window.open(
           `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
             article.url
-          )}&picture=${encodeURIComponent(article.imageUrl)}`, // Include the image URL in the Facebook share URL
+          )}&quote=${encodeURIComponent(tweetText)}`,
           "_blank"
         );
         break;
       case "Twitter":
-        const tweetText = `Check out this article: ${article.title} ${article.url}`;
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
           tweetText
-        )}&url=${encodeURIComponent(article.imageUrl)}`; // Include the image URL in the Twitter share URL
+        )}`;
         window.open(twitterUrl, "_blank");
         break;
       case "LinkedIn":
@@ -38,9 +39,7 @@ function NewsItem({ article, bookmarkArticle }) {
             article.url
           )}&title=${encodeURIComponent(
             article.title
-          )}&summary=${encodeURIComponent(
-            article.description
-          )}&source=${encodeURIComponent(article.imageUrl)}`, // Include the image URL in the LinkedIn share URL
+          )}&summary=${encodeURIComponent(article.description)}`,
           "_blank"
         );
         break;
@@ -48,6 +47,17 @@ function NewsItem({ article, bookmarkArticle }) {
         console.error(`Invalid platform: ${platform}`);
     }
   };
+
+  async function handleCopyToClipBoard() {
+    const textToCopy = `Check out this article:\n${article.title}\n${article.url}`;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      console.log("Text copied to clipboard");
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  }
 
   let authorString;
   if (
@@ -68,7 +78,7 @@ function NewsItem({ article, bookmarkArticle }) {
   }
 
   return (
-    <div class="bg-white dark:bg-gray-800 border hover:bg-gray-50 border-b-gray-200 dark:border-b-gray-700 m-2">
+    <div className="bg-white border border-b-gray-200 dark:border-b-gray-700 m-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <div onClick={() => window.open(article.url, "_blank")}>
         <img
           src={
@@ -82,28 +92,33 @@ function NewsItem({ article, bookmarkArticle }) {
           }}
           className="mx-auto"
         />
-        <div class="p-5">
+        <div
+          className="p-5"
+          onClick={() => window.open(article.url, "_blank")}
+          style={{ cursor: "pointer" }}
+        >
           {/* Displays the article source, author and publish date */}
-          <p className="mb-4 text-gray-600 text-sm">
+          <p className="mb-4 font-normal text-gray-700 dark:text-gray-400 text-sm">
             Source: {article.source.name || "Unknown Source"} - By:{" "}
             {authorString} - on: {article.publishedAt}
           </p>
 
-          <a href="#">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {article.title}
-            </h5>
-          </a>
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {article.title}
+          </h5>
 
-          <p class="font-normal text-gray-700 dark:text-gray-200">
+          <p className="font-normal text-gray-700 dark:text-gray-200">
             {article.description || "Description Missing"}
           </p>
         </div>
       </div>
 
-      <div class="flex w-full">
-        <div class="flex-1 flex items-center justify-center p-4">
-          <button class="p-2 rounded-full hover:bg-blue-100">
+      <div className="flex w-full">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <button
+            className="p-2 rounded-full hover:bg-blue-800 dark dark:text-white hover:text-white dark:hover:text-dark"
+            onClick={handleBookmarkClick}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -120,8 +135,8 @@ function NewsItem({ article, bookmarkArticle }) {
             </svg>
           </button>
         </div>
-        <div class="flex-1 flex items-center justify-center p-4">
-          <button class="p-2 rounded-full hover:bg-blue-100">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <button className="p-2 rounded-full hover:bg-blue-800 dark dark:text-white hover:text-white dark:hover:text-dark">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -138,8 +153,11 @@ function NewsItem({ article, bookmarkArticle }) {
             </svg>
           </button>
         </div>
-        <div class="flex-1 flex items-center justify-center p-4">
-          <button class="p-2 rounded-full hover:bg-blue-100">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <button
+            className="p-2 rounded-full hover:bg-blue-800 dark dark:text-white hover:text-white dark:hover:text-dark"
+            onClick={() => handleCopyToClipBoard()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -156,8 +174,11 @@ function NewsItem({ article, bookmarkArticle }) {
             </svg>
           </button>
         </div>
-        <div class="flex-1 flex items-center justify-center p-4">
-          <button class="p-2 rounded-full hover:bg-blue-100">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <button
+            className="p-2 rounded-full hover:bg-blue-800 dark dark:text-white hover:text-white dark:hover:text-dark"
+            onClick={() => handleShareClick("Twitter")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -169,7 +190,7 @@ function NewsItem({ article, bookmarkArticle }) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
               />
             </svg>
           </button>
@@ -180,92 +201,3 @@ function NewsItem({ article, bookmarkArticle }) {
 }
 
 export default NewsItem;
-
-// <div className="bg-gray-100 border p-4 mb-4 rounded-lg shadow-md">
-//       {/* Displays the article title */}
-//       <h2 className="text-3xl font-bold mb-4">{article.title}</h2>
-
-//       {/* Displays the article image */}
-//       <img
-// src={
-//   article.urlToImage ||
-//   "https://via.placeholder.com/800x400.png?text=Image+Not+Available"
-// }
-// alt={article.title}
-// onError={(e) => {
-//   e.target.src =
-//     "https://via.placeholder.com/800x400.png?text=Image+Not+Available";
-// }}
-//       />
-
-//       {/* Displays the article source, author and publish date */}
-//       <p className="mb-4 text-gray-600 text-sm">
-//         Source: {article.source.name || "Unknown Source"} - By: {authorString} -
-//         on: {article.publishedAt}
-//       </p>
-
-//       {/* Displays the article description */}
-//       <p className="mb-4 text-xl">
-//         {article.description || "Description Missing"}
-//       </p>
-
-//       {/* Button for bookmarking the article */}
-//       <button
-//         className={`bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2 ${
-//           bookmarked && "bg-green-500"
-//         }`}
-//         onClick={handleBookmarkClick}
-//         disabled={bookmarked}
-//       >
-//         {bookmarked ? "Bookmarked" : "Bookmark"}
-//       </button>
-
-//       {/* Button for displaying the comments section */}
-//       <button
-//         className="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2"
-//         onClick={handleCommentsClick}
-//       >
-//         Comments
-//       </button>
-
-//       {/* Share buttons for different platforms */}
-//       <div className="flex items-center mb-4">
-//         <button
-//           className="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2"
-//           onClick={() => handleShareClick("Facebook")}
-//         >
-//           Share on Facebook
-//         </button>
-//         <button
-//           className="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2"
-//           onClick={() => handleShareClick("Twitter")}
-//         >
-//           Share on Twitter
-//         </button>
-//         <button
-//           className="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2"
-//           onClick={() => handleShareClick("LinkedIn")}
-//         >
-//           Share on LinkedIn
-//         </button>
-//         <button
-//           className="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2 mb-2 mt-2"
-//           onClick={() => window.open(article.url, "_blank")}
-//         >
-//           Read More
-//         </button>
-//       </div>
-//     </div>
-// <svg
-//   aria-hidden="true"
-//   class="w-4 h-4 ml-2 -mr-1"
-//   fill="currentColor"
-//   viewBox="0 0 20 20"
-//   xmlns="http://www.w3.org/2000/svg"
-// >
-//   <path
-//     fill-rule="evenodd"
-//     d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-//     clip-rule="evenodd"
-//   ></path>
-// </svg>
