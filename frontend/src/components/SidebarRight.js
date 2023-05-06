@@ -62,7 +62,7 @@ function SidebarRight({
             <li key={index}>
               <div
                 onClick={() => searchByCategory(category)}
-                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
+                className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
               >
                 <span className="inline-block mr-2 text-gray-900 dark:text-white">
                   {category}

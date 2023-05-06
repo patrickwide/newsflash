@@ -34,7 +34,7 @@ function App() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `http://patrickmoringaschool.pythonanywhere.com/api/top-headlines`
+          `https://patrickmoringaschool.pythonanywhere.com/api/top-headlines`
         );
         const data = await response.json();
         setArticles(data.articles);
@@ -54,7 +54,7 @@ function App() {
         setIsLoading(true);
         try {
           const response = await fetch(
-            `http://patrickmoringaschool.pythonanywhere.com/api/search?q=${searchQuery}&pageSize=15`
+            `https://patrickmoringaschool.pythonanywhere.com/api/search?q=${searchQuery}&pageSize=15`
           );
           const data = await response.json();
           setRecentSearches((prevSearches) => [...prevSearches, searchQuery]);
