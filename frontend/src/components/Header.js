@@ -2,70 +2,55 @@ import React from "react";
 import Search from "./Search";
 import logo from "./..//android-chrome-192x192.png";
 
-function Header({ onSearchSubmit }) {
+function Header({ onSearchSubmit, isDark = true }) {
   return (
-    <nav className="bg-white h-8 border-gray-200 h-full dark:bg-gray-900">
-      <div className="md:container md:mx-auto">
-        <div className="grid grid-cols-4 gap-4 font-mono rounded-lg">
-          <div className="flex items-center justify-center px-4">
-            <NavLogo />
-            {/* 01 */}
-          </div>
-          <div className="col-span-2 border-gray-200 dark:border-gray-700 p-2">
-            <Search onSubmit={(query) => onSearchSubmit(query)} />
-            {/* 02 */}
-          </div>
-          <div className="flex items-center justify-center px-4">
-            <NavLinks />
-            {/* 03 */}
-          </div>
-        </div>
+    <nav className="bg-white border-b border-gray-200 dark:bg-gray-900">
+      <div className="max-w-screen-md mx-auto flex items-center justify-between px-4 pt-8">
+        <a href="/" className="flex items-center">
+          <img src={logo} className="h-8 mr-3" alt="NewsFlash Logo" />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            NewsFlash
+          </span>
+        </a>
+        <button className="text-gray-400 hover:text-gray-600">
+          {isDark == true ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+      <div className="max-w-screen-md mx-auto  px-4 py-4">
+        <Search onSubmit={(query) => onSearchSubmit(query)} />
       </div>
     </nav>
   );
 }
 
 export default Header;
-
-function NavLogo() {
-  return (
-    <a href="/" className="flex items-center">
-      <img src={logo} className="h-8 mr-3" alt="NewsFlash Logo" />
-      <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-        NewsFlash
-      </span>
-    </a>
-  );
-}
-
-function NavLinks() {
-  return (
-    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-      <li>
-        <a
-          href="#"
-          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-          aria-current="page"
-        >
-          Home
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-        >
-          About
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-        >
-          Services
-        </a>
-      </li>
-    </ul>
-  );
-}
