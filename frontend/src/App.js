@@ -49,11 +49,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const storedSearches = JSON.parse(localStorage.getItem("recentSearches"));
-    if (storedSearches) {
-      setRecentSearches(storedSearches);
-    }
-
     if (searchQuery) {
       (async () => {
         setIsLoading(true);
@@ -65,11 +60,6 @@ function App() {
           setRecentSearches((prevSearches) => [...prevSearches, searchQuery]);
           setArticles(data.articles);
           setIsLoading(false);
-          console.log(data);
-          localStorage.setItem(
-            "recentSearches",
-            JSON.stringify(recentSearches)
-          );
         } catch (error) {
           console.error("Error fetching news data: ", error);
           setError(error);
@@ -78,6 +68,19 @@ function App() {
       })();
     }
   }, [searchQuery]);
+
+  useEffect(() => {
+    const storedSearches = JSON.parse(localStorage.getItem("recentSearches"));
+    if (storedSearches) {
+      setRecentSearches(storedSearches);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery) {
+      localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+    }
+  }, [recentSearches]);
 
   useEffect(() => {
     // Define an async function and immediately invoke it
@@ -99,6 +102,7 @@ function App() {
       }
     })();
   }, []);
+
   function handleOnDeleteSearchTerm(index) {
     setRecentSearches((prevSearches) =>
       prevSearches.slice(0, index).concat(prevSearches.slice(index + 1))
@@ -154,7 +158,10 @@ function App() {
   function handleOnDeleteSearchTerm(index) {
     const storedSearches = JSON.parse(localStorage.getItem("recentSearches"));
     if (storedSearches) {
-      const updatedSearches = storedSearches.filter((_, i) => i !== index);
+      const searchTermToDelete = storedSearches[index];
+      const updatedSearches = storedSearches.filter(
+        (searchTerm) => searchTerm !== searchTermToDelete
+      );
       localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
       setRecentSearches(updatedSearches);
     }
