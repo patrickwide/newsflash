@@ -167,6 +167,14 @@ function App() {
     }
   }
 
+  function handleSearchByRecent(searchTerm) {
+    setSearchQuery(searchTerm);
+  }
+
+  function handleSearchByCategory(category) {
+    setSearchQuery(category);
+  }
+
   return (
     <div className="bg-white dark:bg-gray-800">
       <Layout
@@ -178,6 +186,8 @@ function App() {
             selectedCategories={selectedCategories}
             recentSearches={recentSearches}
             onDeleteSearchTerm={handleOnDeleteSearchTerm}
+            searchByRecent={handleSearchByRecent}
+            searchByCategory={handleSearchByCategory}
           />
         }
       />

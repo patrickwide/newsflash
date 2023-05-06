@@ -4,6 +4,8 @@ function SidebarRight({
   selectedCategories,
   recentSearches,
   onDeleteSearchTerm,
+  searchByCategory,
+  searchByRecent,
 }) {
   const groupedSearches = recentSearches.reduce((acc, searchTerm) => {
     if (searchTerm in acc) {
@@ -14,12 +16,12 @@ function SidebarRight({
     return acc;
   }, {});
 
-  const searchList = Object.values(groupedSearches).map(
-    ({ searchTerm, count }, index) => (
+  const searchList = Object.values(groupedSearches)
+    .map(({ searchTerm, count }, index) => (
       <li key={index}>
-        <a
-          href="#"
-          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative"
+        <div
+          onClick={() => searchByRecent(searchTerm)}
+          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
         >
           <span className="inline-block mr-2 text-gray-900 dark:text-white">
             {searchTerm}
@@ -44,10 +46,10 @@ function SidebarRight({
               </svg>
             </button>
           </span>
-        </a>
+        </div>
       </li>
-    )
-  );
+    ))
+    .reverse();
 
   return (
     <div className="p-4">
@@ -58,9 +60,9 @@ function SidebarRight({
         <ul className="list-none">
           {selectedCategories.map((category, index) => (
             <li key={index}>
-              <a
-                href="#"
-                className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative"
+              <div
+                onClick={() => searchByCategory(category)}
+                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
               >
                 <span className="inline-block mr-2 text-gray-900 dark:text-white">
                   {category}
@@ -81,7 +83,7 @@ function SidebarRight({
                     />
                   </svg>
                 </span>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
