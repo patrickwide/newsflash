@@ -2,7 +2,11 @@ import React from "react";
 
 function SidebarLeft({ bookmarkedArticles }) {
   return (
-    <div className="p-4">
+    <div>
+      <h2 className="mb-4 text-lg font-medium tracking-tight text-gray-900 dark:text-white">
+        Bookmarks
+      </h2>
+
       {bookmarkedArticles
         .slice()
         .reverse()
@@ -12,7 +16,7 @@ function SidebarLeft({ bookmarkedArticles }) {
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="block max-w-sm mb-2 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+            className="block mb-2 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {article.source.name}

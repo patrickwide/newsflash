@@ -21,7 +21,7 @@ function SidebarRight({
       <li key={index}>
         <div
           onClick={() => searchByRecent(searchTerm)}
-          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
+          className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
         >
           <span className="inline-block mr-2 text-gray-900 dark:text-white">
             {searchTerm}
@@ -52,42 +52,40 @@ function SidebarRight({
     .reverse();
 
   return (
-    <div className="p-4">
-      <div className="mb-8">
-        <h2 className="mb-4 text-lg font-medium tracking-tight text-gray-900 dark:text-white">
-          Categories
-        </h2>
-        <ul className="list-none">
-          {selectedCategories.map((category, index) => (
-            <li key={index}>
-              <div
-                onClick={() => searchByCategory(category)}
-                className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
-              >
-                <span className="inline-block mr-2 text-gray-900 dark:text-white">
-                  {category}
-                </span>
-                <span className="absolute text-sm text-gray-400 right-0 top-0 flex items-center h-full pr-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div>
+      <h2 className="mb-4 text-lg font-medium tracking-tight text-gray-900 dark:text-white">
+        Categories
+      </h2>
+      <ul className="list-none">
+        {selectedCategories.map((category, index) => (
+          <li key={index}>
+            <div
+              onClick={() => searchByCategory(category)}
+              className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-2 relative cursor-pointer"
+            >
+              <span className="inline-block mr-2 text-gray-900 dark:text-white">
+                {category}
+              </span>
+              <span className="absolute text-sm text-gray-400 right-0 top-0 flex items-center h-full pr-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
       <div>
         <h2 className="mb-4 text-lg font-medium tracking-tight text-gray-900 dark:text-white">
           Recent Searches
